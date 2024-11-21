@@ -1,0 +1,11 @@
+@SoftWizard_HostAddress = https://localhost:7229
+
+GET {{SoftWizard_HostAddress}}/api/users
+Accept: application/json
+
+###
+
+DELETE {{SoftWizard_HostAddress}}/api/users/delete/3
+Accept: application/json
+
+###

@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\UsersController.cs" />
+    <Compile Remove="Models\User.cs" />
     <Compile Remove="Services\DapperRepository.cs" />
+    <Compile Remove="Services\IRepository.cs" />
+    <Compile Remove="Services\IUserRepository.cs" />
+    <Compile Remove="Services\UserRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>

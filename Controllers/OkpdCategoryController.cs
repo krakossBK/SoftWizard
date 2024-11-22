@@ -9,7 +9,7 @@ namespace SoftWizard.Controllers
     public class OkpdCategoryController(IUnitOfWork unitOfWork, ILogger<OkpdCategoryController> logger) : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork = unitOfWork;
-        private readonly ILogger<OkpdCategoryController> _logger = logger;
+        public ILogger<OkpdCategoryController> _logger = logger;
 
         [HttpGet("/api/okpd")]
         public async Task<IActionResult> GetAll()
@@ -24,7 +24,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return null;
+                return Ok("");
             }
 
         }
@@ -44,7 +44,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return null;
+                return Ok("");
             }
         }
 
@@ -61,7 +61,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return null;
+                return Ok("");
             }
         }
 
@@ -78,7 +78,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return null;
+                return Ok("");
             }
         }
 
@@ -95,7 +95,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return null;
+                return Ok("");
             }
         }
 

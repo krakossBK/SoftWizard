@@ -4,6 +4,8 @@ using SoftWizard.Services;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
+
+services.AddMemoryCache();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();

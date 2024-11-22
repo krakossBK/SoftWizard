@@ -9,3 +9,13 @@ DELETE {{SoftWizard_HostAddress}}/api/users/delete/3
 Accept: application/json
 
 ###
+
+
+GET {{SoftWizard_HostAddress}}/api/okpd
+Accept: application/json
+
+###
+GET {{SoftWizard_HostAddress}}/api/okpd/11
+Accept: application/json
+
+###

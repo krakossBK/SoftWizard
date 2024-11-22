@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Memory;
+using SoftWizard.AppCode;
 using SoftWizard.Models;
 
 namespace SoftWizard.Services
@@ -59,14 +60,33 @@ namespace SoftWizard.Services
         {
             try
             {
-                string sql = "SELECT * FROM OkpdCategories";
-                var connString = configuration.GetConnectionString("connStr");
-                SqlConnection sqlConn = new(connString);
-                using SqlConnection connection = sqlConn;
-                connection.Open();
-                IEnumerable<OkpdCategory> result = await connection.QueryAsync<OkpdCategory>(sql);
-                connection.Close();
-                return result.ToList();
+                IEnumerable<OkpdCategory> result;
+
+                bool resultCache = cache.TryGetValue(CacheKeys.OkpdCategory, value: out List<OkpdCategory> okpdCategory);
+
+                if (!resultCache)
+                {
+                    string sql = "SELECT * FROM OkpdCategories";
+                    var connString = configuration.GetConnectionString("connStr");
+                    SqlConnection sqlConn = new(connString);
+                    using SqlConnection connection = sqlConn;
+                    connection.Open();
+                    result = await connection.QueryAsync<OkpdCategory>(sql);
+                    connection.Close();
+
+                    var cacheEntryOptions = new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpiration = DateTime.Now.AddMinutes(2),
+                        SlidingExpiration = TimeSpan.FromMinutes(1),
+                        Size = 1024,
+                    };
+                    cache.Set(CacheKeys.OkpdCategory, result, cacheEntryOptions);
+                    _logger.LogInformation($"{result.Count()} штук записей извлечены из базы данных");
+                }
+                else
+                    result = (IEnumerable<OkpdCategory>)cache.Get(CacheKeys.OkpdCategory);
+
+                return result.ToList(); // Get the data from database
             }
             catch (Exception ex)
             {

@@ -24,7 +24,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return Ok("");
+                return BadRequest(expp);
             }
 
         }
@@ -44,7 +44,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return Ok("");
+                return BadRequest(expp);
             }
         }
 
@@ -61,7 +61,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return Ok("");
+                return BadRequest(expp);
             }
         }
 
@@ -78,7 +78,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return Ok("");
+                return BadRequest(expp);
             }
         }
 
@@ -95,7 +95,7 @@ namespace SoftWizard.Controllers
             {
                 string expp = ex.Message;
                 _logger.LogError(expp);
-                return Ok("");
+                return BadRequest(expp);
             }
         }
 

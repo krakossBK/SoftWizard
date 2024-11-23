@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 
 // .....................
-//using Microsoft.AspNetCore.OutputCaching;   // для атрибута [OutputCache]
+//using Microsoft.AspNetCore.OutputCaching;   // for attribute [OutputCache]
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -12,22 +12,18 @@ var services = builder.Services;
 services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
-
-    // исключаем из сжатия простой текст
     options.ExcludedMimeTypes = ["text/plain"];
 
     options.Providers.Add<BrotliCompressionProvider>();
-    // добавляем провайдер gzip-сжатия
     options.Providers.Add(new GzipCompressionProvider(new GzipCompressionProviderOptions()));
-    // добавляем провайдер сжатия DeflateCompressionProvider
     options.Providers.Add(new SoftWizard.AppCode.DeflateCompressionProvider());
 });
 
-// устанавливаем уровень сжатия
+// set level Compress
 services.Configure<BrotliCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
 services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
 
-services.AddOutputCache();  // добавляем сервисы
+services.AddOutputCache();  
 services.AddMemoryCache();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
@@ -49,7 +45,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseOutputCache(); // добавляем OutputCacheMiddleware
+app.UseOutputCache(); // add OutputCacheMiddleware
 
 app.UseDefaultFiles();
 app.UseStaticFiles(new StaticFileOptions()
@@ -61,21 +57,9 @@ app.UseStaticFiles(new StaticFileOptions()
 });
 
 
-// подключаем сжатие
+// add Compress
 app.UseResponseCompression();
 
 app.UseRouting();
 app.MapControllers();
-
-//app.MapGet("/", () => okpdCategory).CacheOutput();  // применяем кэширование
-
-//app.MapGet("/", async () =>
-//{
-//    await Task.Delay(5000);     // имитация долгой обработки
-//    return OkpdCategory;
-//}).CacheOutput();   // применяем кэширование к результату обработки метода app.MapGet("/")
-
-// .....................
-// app.MapGet("/", [OutputCache] () => OkpdCategory);
-
 app.Run();

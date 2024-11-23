@@ -33,9 +33,7 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
-#pragma warning disable CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
 string dbConnectionString = configuration.GetConnectionString("connStr");
-#pragma warning restore CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
 
 services.AddTransient<IDbConnection>((sp) => new SqlConnection(dbConnectionString));
 

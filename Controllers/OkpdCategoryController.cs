@@ -14,89 +14,32 @@ namespace SoftWizard.Controllers
         [HttpGet("/api/okpd")]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                var data = await unitOfWork.OkpdCategory.GetAllAsync();
-                return Ok(data);
-
-            }
-            catch (Exception ex)
-            {
-                string expp = ex.Message;
-                _logger.LogError(expp);
-                return BadRequest(expp);
-            }
-
+            return Ok(await unitOfWork.OkpdCategory.GetAllAsync());
         }
 
         [HttpGet("/api/okpd/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-
-                var data = await unitOfWork.OkpdCategory.GetByIdAsync(id);
-                var dataId = data.Id;
-
-                return Ok(data != null ? data : "");
-            }
-            catch (Exception ex)
-            {
-                string expp = ex.Message;
-                _logger.LogError(expp);
-                return BadRequest(expp);
-            }
+            var data = await unitOfWork.OkpdCategory.GetByIdAsync(id);
+            return Ok(data != null ? data : "");
         }
 
         [HttpPost("/api/add-okpd")]
         public async Task<IActionResult> Add(OkpdCategory okpdCategory)
         {
-            try
-            {
-
-                var data = await unitOfWork.OkpdCategory.AddAsync(okpdCategory);
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                string expp = ex.Message;
-                _logger.LogError(expp);
-                return BadRequest(expp);
-            }
+            return Ok(await unitOfWork.OkpdCategory.AddAsync(okpdCategory));
         }
 
         [HttpDelete("/api/delete-okpd")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                var data = await unitOfWork.OkpdCategory.DeleteAsync(id);
-                return Ok(data);
-
-            }
-            catch (Exception ex)
-            {
-                string expp = ex.Message;
-                _logger.LogError(expp);
-                return BadRequest(expp);
-            }
+            return Ok(await unitOfWork.OkpdCategory.DeleteAsync(id));
         }
 
         [HttpPut("/api/update-okpd")]
         public async Task<IActionResult> Update(OkpdCategory okpdCategory)
         {
-            try
-            {
-                var data = await unitOfWork.OkpdCategory.UpdateAsync(okpdCategory);
-                return Ok(data);
-
-            }
-            catch (Exception ex)
-            {
-                string expp = ex.Message;
-                _logger.LogError(expp);
-                return BadRequest(expp);
-            }
+            return Ok(await unitOfWork.OkpdCategory.UpdateAsync(okpdCategory));
         }
 
         [NonAction]

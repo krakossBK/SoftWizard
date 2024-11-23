@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Data.SqlClient;
 using SoftWizard.Services;
+using System.Data;
 using System.IO.Compression;
 
 
@@ -7,7 +9,9 @@ using System.IO.Compression;
 //using Microsoft.AspNetCore.OutputCaching;   // for attribute [OutputCache]
 
 var builder = WebApplication.CreateBuilder(args);
+
 var services = builder.Services;
+var configuration = builder.Configuration;
 
 services.AddResponseCompression(options =>
 {
@@ -28,6 +32,12 @@ services.AddMemoryCache();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+
+#pragma warning disable CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
+string dbConnectionString = configuration.GetConnectionString("connStr");
+#pragma warning restore CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
+
+services.AddTransient<IDbConnection>((sp) => new SqlConnection(dbConnectionString));
 
 services.AddTransient<IOkpdCategoryRepository, OkpdCategoryService>();
 services.AddTransient<IUnitOfWork, UnitOfWork>();

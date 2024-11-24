@@ -115,7 +115,8 @@ namespace SoftWizard.Services
 
                         cache.Set(result.Id, result, cacheOptions);
                     }
-                    _logger.LogInformation($"{result.Name} извлечен из базы данных");
+                    string resultName = result != null ? result.Name : "";
+                    _logger.LogInformation($"{resultName} извлечен из базы данных");
                 }
                 else
                     return okpdCategory;
